@@ -30,8 +30,7 @@ import { auth } from '../firebaseConfig';
                 const responseSignOut = await signOut(auth);
                 console.log( responseSignOut );
                 router.push('/login');
-                if( responseSignOut ) {
-                }
+                localStorage.removeItem('tokenFB')
             };
 
             return {

@@ -72,6 +72,7 @@ export default {
         });
         const handleSubmit = (event) => {
             event.preventDefault();
+            Msg_Error.value = "";
             const { email: { value: emailUser }, password: { value: passwordUser } } = formLogin;
             let error = false;
             isLoading.value = true;
@@ -105,12 +106,14 @@ export default {
         
         const loginWithEmailPassword = async(email, password) => {
             isLoading.value = true;
+            Msg_Error.value = "";
             try {
                 const responseLoginEmailPass = await signInWithEmailAndPassword(auth, email, password);
                 console.log( responseLoginEmailPass );
                 if( responseLoginEmailPass ) {
                     router.push('/')
                     isLoading.value = false;
+                    localStorage.setItem('tokenFB', responseLoginEmailPass.user.accessToken)
                 }
             } catch (error) {
                 console.error('Ha ocurrido un error en el login', {...error});
@@ -131,6 +134,7 @@ export default {
 
         const loginWithGoogle = async () => {
             isLoading.value = true;
+            Msg_Error.value = "";
             try {
                 const providerGoogle = new GoogleAuthProvider();
                 const responseSignWithPopUp = await signInWithPopup(auth, providerGoogle);
@@ -140,7 +144,8 @@ export default {
                 }
                 isLoading.value = false;
             } catch (error) {
-                console.error("Ha ocurrido un error en el registro", error);
+                console.error("Ha ocurrido un error con el incio de sesion en google", error);
+                Msg_Error.value = 'Ha ocurrido un error con el incio de sesion en google'
                 isLoading.value = false;
             }
         }

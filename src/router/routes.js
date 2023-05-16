@@ -8,8 +8,8 @@ import { auth } from '../firebaseConfig';
 
 
 const routes = [
-    { path: '/', component: Main, name: 'Home', meta: { requiresAuth: true }},
-    { path: '/productos', component: Productos, name: 'Productos', meta: { requiresAuth: true } },
+    { path: '/', component: Main, name: 'Home', meta:{ requiresAuth: true }},
+    { path: '/productos', component: Productos, name: 'Productos', meta:{ requiresAuth: true } },
     { path: '/login', component: Login, name: 'Login' },
     { path: '/register', component: Register, name: 'Registro' },
     { path: '/recover_pass', component: RecoverPass, name: 'Recover Password' }
@@ -23,11 +23,19 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const isAuthenticated = auth.currentUser;
-    console.log( to )
-    if (requiresAuth && !isAuthenticated) {
-      next('/login');
+
+    if ( localStorage.getItem('tokenFB') ) {
+        if( to.path === '/login' || to.path === '/register' || to.path === '/recover_pass') {
+            next('/')
+        } else {
+            next();
+        }
     } else {
-      next();
+        if( requiresAuth ) {
+            next('/login')
+        } else {
+            next();
+        }
     }
   });
 
