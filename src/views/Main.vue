@@ -103,4 +103,21 @@ export default {
             }
         }
     }
-}</style>
+}
+
+@media screen and (max-width: 520px){
+    .Main_Content_Desc {
+    width: 95%;
+    padding-top: 4rem;
+
+    h2.title {
+        font-size: 34px;
+    }
+
+    p.desc {
+        width: 100%;
+        margin-top: 2rem;
+    }
+}
+}
+</style>

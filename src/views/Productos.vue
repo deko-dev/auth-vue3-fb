@@ -69,4 +69,15 @@ export default {
         gap: 1.5rem;
     }
 }
+
+@media screen and (max-width: 520px) {
+    .Main_Content_Products {
+    .Products_Cards {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+}
 </style>
